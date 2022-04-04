@@ -4,10 +4,9 @@ redirect_from:
   - /enterprise/admin/articles/ssh-access
   - /enterprise/admin/articles/adding-an-ssh-key-for-shell-access
   - /enterprise/admin/guides/installation/administrative-shell-ssh-access
-  - /enterprise/admin/articles/troubleshooting-ssh-permission-denied-publickey
-  - /enterprise/admin/2.13/articles/troubleshooting-ssh-permission-denied-publickey
-  - /enterprise/admin/2.14/articles/troubleshooting-ssh-permission-denied-publickey
-  - /enterprise/admin/2.15/articles/troubleshooting-ssh-permission-denied-publickey
+  
+
+
   - /enterprise/admin/installation/accessing-the-administrative-shell-ssh
   - /enterprise/admin/configuration/accessing-the-administrative-shell-ssh
   - /admin/configuration/accessing-the-administrative-shell-ssh
@@ -64,11 +63,11 @@ ssh -i /path/to/ghe_private_key -p 122 admin@<em>hostname</em>
 You can also specify a private SSH key using the SSH configuration file (`~/.ssh/config`).
 
 ```shell
-Host <em>hostname</em>
+Host <em>cain175</em>
   IdentityFile /path/to/ghe_private_key
   User admin
   Port 122
-```
+##git-apt-list
 
 ## Accessing the administrative shell using the local console
 
