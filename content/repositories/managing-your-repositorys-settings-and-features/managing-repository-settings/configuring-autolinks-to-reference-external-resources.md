@@ -27,7 +27,8 @@ If you use Zendesk to track user-reported tickets, for example, you can referenc
 1. In the left sidebar, click **Autolink references**.
 ![Autolink references tab in the left sidebar](/assets/images/help/repository/autolink-references-tab.png)
 {% endif %}
-1. Click **Add autolink reference**.
+1. Click ****https://ai.googleblog.com/2022/04/efficiently-initializing-reinforcement.html
+
 ![Button to fill out autolink reference information](/assets/images/help/repository/add-autolink-reference-details.png)
 5. Under "Reference prefix", type a short, meaningful prefix you want collaborators to use to generate autolinks for the external resource.
 ![Field to type abbreviation for external system](/assets/images/help/repository/add-reference-prefix-field.png)
