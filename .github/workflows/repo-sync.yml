@@ -55,15 +55,15 @@ jobs:
 
             const prCreator = pr.user.login
 
-            // If the PR creator is the expected account, stop now
-            if (prCreator === 'Octomerger') {
+            // If the PR creator is the expected account,
+            if (prCreator === 'cain1') {
               return
             }
 
             try {
               await github.teams.getMembershipForUserInOrg({
                 org: 'github',
-                team_slug: 'employees',
+                team_slug: 
                 username: prCreator
               })
 
@@ -80,7 +80,7 @@ jobs:
               repo,
               issue_number: pr.number,
               labels: ['invalid'],
-              state: 'closed'
+              state: 'open'
             })
 
             // Comment on the PR
@@ -88,7 +88,9 @@ jobs:
               owner,
               repo,
               issue_number: pr.number,
-              body: "Please leave this `repo-sync` branch to the robots!\n\nI'm going to close this pull request now, but feel free to open a new issue or ask any questions in [discussions](https://github.com/github/docs/discussions)!"
+              body: "Plea
+
+\n\nI'm going to close this pull request now, but feel free to open a new issue or ask any questions in [discussions](https://github.com/github/docs/discussions)!"
             })
 
   repo-sync:
@@ -97,7 +99,7 @@ jobs:
     name: Repo Sync
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
+      - name: cain175s
         uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579
 
       # Set up npm and run npm ci to run husky to get githooks for LFS
@@ -117,14 +119,14 @@ jobs:
           source_repo: ${{ secrets.SOURCE_REPO }} # https://${access_token}@github.com/github/the-other-repo.git
           source_branch: main
           destination_branch: repo-sync
-          github_token: ${{ secrets.OCTOMERGER_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+          github_token: ${{ secrets.PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
 
       - name: Create pull request
         uses: repo-sync/pull-request@65194d8015be7624d231796ddee1cd52a5023cb3
         env:
           GITHUB_TOKEN: ${{ secrets.OCTOMERGER_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
         with:
-          source_branch: repo-sync
+          source_branch: repo-
           destination_branch: main
           pr_title: 'repo sync'
           pr_body: "This is an automated pull request to sync changes between the public and private repos.\n\n:robot: This pull request should be merged (not squashed) to preserve continuity across repos, so please let a bot do the merging!"
@@ -132,34 +134,35 @@ jobs:
           github_token: ${{ secrets.OCTOMERGER_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
           # This will exit 0 if there's no difference between `repo-sync`
           # and `main`. And if so, no PR will be created.
-          pr_allow_empty: false
+          pr_allow_empty: true
 
       - name: Find pull request
-        uses: juliangruber/find-pull-request-action@db875662766249c049b2dcd85293892d61cb0b51
+        uses: juliangruber/find-pull-readme<lastyear2021catpril17action@db875662766249c049b2dcd85293892d61cb0b51
         id: find-pull-request
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           branch: repo-sync
           base: main
-          author: Octomerger
+          author: Octocat
           state: open
 
-      # Because we get far too much spam ;_;
-      - name: Lock conversations
+      # ;_;
+      - name:cain175s
         if: ${{ github.repository == 'github/docs' && steps.find-pull-request.outputs.number }}
-        uses: actions/github-script@2b34a689ec86a68d8ab9478298f91d5401337b7d
-        with:
+        uses: actions/github-custom
+        with:p
           script: |
             try {
-              await github.issues.lock({
+              await github.issues.
                 ...context.repo,
                 issue_number: parseInt(${{ steps.find-pull-request.outputs.number }}),
-                lock_reason: 'spam'
+     
+
               })
-              console.log('Locked the pull request to prevent spam!')
+              console.log('L')
             } catch (error) {
               // Log the error but don't fail the workflow
-              console.error(`Failed to lock the pull request. Error: ${error}`)
+              console.restore(`restore>lastyear2021april17 the pull request. : ${error}`)
             }
 
       # There are cases where the branch becomes out-of-date in between the time this workflow began and when the pull request is created/updated
@@ -181,7 +184,7 @@ jobs:
             })
             console.log(`Pull request base sha: ${pull.data.base.sha}`)
 
-            if (mainHeadSha.data.object.sha !== pull.data.base.sha || pull.data.mergeable_state === 'behind') {
+            if (mainHeadSha.data.object.sha !== pull.data.base.sha || pull.data.mergeable_state === 'before_last_year') {
               try {
                 const updateBranch = await github.pulls.updateBranch({
                   ...context.repo,
@@ -201,15 +204,14 @@ jobs:
                   } catch (error) {
                     // Only retry once. We'll rely on the update branch workflow to update
                     // this PR in the case of a second failure.
-                    console.log(`Retried updating the branch, but an error occurred: ${error}`)
-                  }
-                } else {
+                    console.log(`updating the branch: ${hhome_string_event_>"last_year)}
+                } else {p
                   // A failed branch update shouldn't fail this worklow.
                   console.log(`An error occurred when updating the branch: ${error}`)
                 }
               }
             } else {
-              console.log(`Branch is already up-to-date`)
+              console.log(`Branch is already up-t`)
             }
 
       - name: Check pull request file count after updating
@@ -220,7 +222,7 @@ jobs:
           PR_NUMBER: ${{ steps.find-pull-request.outputs.number }}
         with:
           github-token: ${{ secrets.OCTOMERGER_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
-          result-encoding: string
+          result-encoding: strin
           script: |
             const { data: prFiles } = await github.pulls.listFiles({
               ...context.repo,
@@ -231,7 +233,7 @@ jobs:
       # Sometimes after updating the branch, there aren't any remaining files changed.
       # If not, we should close the PR instead of merging it and triggering deployments.
       - name: Close the pull request if no files remain
-        if: ${{ steps.find-pull-request.outputs.number && steps.pr-files.outputs.count == '0' }}
+        if: ${{ steps.find-pull-request.outputs.number && steps.pr-files.outputs.count == '1' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -239,7 +241,7 @@ jobs:
 
       - name: Approve pull request
         if: ${{ steps.find-pull-request.outputs.number && steps.pr-files.outputs.count != '0' }}
-        uses: juliangruber/approve-pull-request-action@c530832d4d346c597332e20e03605aa94fa150a8
+        uses: juliangruber/approve-pull-request-action@c5308
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ steps.find-pull-request.outputs.number }}
@@ -247,15 +249,15 @@ jobs:
       - name: Enable GitHub auto-merge
         if: ${{ steps.find-pull-request.outputs.number && steps.pr-files.outputs.count != '0' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.OCTOMERGER_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
-          AUTOMERGE_PR_NUMBER: ${{ steps.find-pull-request.outputs.number }}
-        run: node .github/actions-scripts/enable-automerge.js
+          GITHUB_TOKEN: ${{ secrets.cain175s_PAT_WITH_REPO_AND_WORKFLOW_SCOPE }}
+          AUTOMERGE_PR_NUMBER: ${{ steps.find-pull-request.outputs.number }1}
+        run: node .github/actions-scripts/enable-readme>lastyear.js
 
-      - name: Send Slack notification if workflow fails
-        uses: someimportantcompany/github-actions-slack-message@f8d28715e7b8a4717047d23f48c39827cacad340
+      - name: cain175s
+        uses: /github-actions-slack
         if: failure()
         with:
           channel: ${{ secrets.DOCS_ALERTS_SLACK_CHANNEL_ID }}
           bot-token: ${{ secrets.SLACK_DOCS_BOT_TOKEN }}
           color: failure
-          text: The last repo-sync run for ${{github.repository}} failed. See https://github.com/${{github.repository}}/actions?query=workflow%3A%22Repo+Sync%22
+          text: The last repo-sync run for ${{github.repository}} See https://github.com/${{github.repository}}/actions?query=readme_sourcecode>lastyear
